@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="mb-2 p-3 position-relative bg-secondary rounded">
+  <h2>{{ .Title }}</h2>
+  {{- if .Params.breadcrumbs -}}
+  <small>{{- partial "breadcrumb" . -}}</small>
+  {{- end -}}
+  <hr />
+  <div 
+    class="rounded"
+    {{ with .Params.content_font }} 
+      style="font-family: '{{ . }}'"
+    {{ end }}
+  >
+    {{ .Content }}
+  </div>
+</div>
+{{ end }}
