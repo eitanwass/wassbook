@@ -1,14 +1,27 @@
 {{ define "main" }}
-<div class="mb-2 p-3 position-relative bg-secondary rounded">
+<div 
+  class="mb-2 p-3 position-relative bg-secondary rounded"
+  style="  width: 50vw;
+    margin-right: auto;
+    margin-left: auto;
+  "
+>
   <h2>{{ .Title }}</h2>
   {{- if .Params.breadcrumbs -}}
   <small>{{- partial "breadcrumb" . -}}</small>
   {{- end -}}
   <hr />
+  {{ $style := slice }}
+  {{ with .Params.content_font }}
+    {{ $style = $style | append (printf "font-family: '%s'" .) }}
+  {{ end }}
+  {{ with .Params.font_size }}
+    {{ $style = $style | append (printf "font-size: %s" .) }}
+  {{ end }}
   <div 
     class="rounded"
-    {{ with .Params.content_font }} 
-      style="font-family: '{{ . }}'"
+    {{ if gt (len $style) 0 }} 
+      style="{{ delimit $style "; " | safeCSS }}"
     {{ end }}
   >
     {{ .Content }}
